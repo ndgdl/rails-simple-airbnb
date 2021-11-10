@@ -1,0 +1,36 @@
+<h1>All our flats</h1>
+
+<% if Flat.count.zero? %>
+  <p>No flats found</p>
+<% else %>
+  <p><%= Flat.count %> flat<%= 's' if Flat.count > 0 %> found</p>
+<% end %>
+
+<div class="row">
+  <% @flats.each do |flat| %>
+  <div class="col-4">
+    <div class="card shadow-sm mb-3" style="width: 18rem;">
+      <img src=<%= flat.img_url %> class="card-img-top" alt="...">
+      <div class="card-body bg-light px-3">
+        <h5 class="card-title"><%= flat.name %></h5>
+        <p class="card-text"><%= "#{flat.description[0...50]}..." %></p>
+      </div>
+      <div class="card-body bg-light">
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item"><i class="fas fa-user-friends"></i>  <%= flat.number_of_guests %></li>
+          <li class="list-inline-item"><i class="fas fa-euro-sign"></i>  <%= flat.price_per_night %></li>
+        </ul>
+      </div>
+      <div class="card-body border-top d-flex justify-content-around">
+        <%= link_to 'More info', flat_path(flat), class: "link-primary" %>
+        <%= link_to 'Edit', edit_flat_path(flat), class: "link-warning" %>
+        <%= link_to "Remove",
+                      flat_path(flat),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" },
+                      class: "link-danger" %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
